@@ -1,0 +1,58 @@
+{
+    "fetch_url": "https://raw.githubusercontent.com/lifearoundfreaks/DTEK-parser/refs/heads/data/dtek_data.json",
+    "home_title": "Оберіть вашу групу відключень",
+    "go_back": "Повернутися до вибору групи",
+    "group": "Група",
+    "group_schedule": "Графік відключень для групи",
+    "time_intervals": "Часові проміжки",
+    "status": "Статус",
+    "loading": "Завантаження...",
+    "error_loading": "Помилка завантаження даних",
+    "show_tomorrow": "Показати на завтра",
+    "last_updated": "Останнє оновлення даних графіків",
+    "legend": {
+        "has_power": "Світло є",
+        "no_power": "Світла немає",
+        "no_power_first_half": "Світла не буде перші 30 хв.",
+        "no_power_second_half": "Світла не буде другі 30 хв",
+        "current_time": "Час на момент оновлення сторінки"
+    },
+    "groups": {
+        "GPV1.1": {
+            "name": "1.1"
+        },
+        "GPV1.2": {
+            "name": "1.2"
+        },
+        "GPV2.1": {
+            "name": "2.1"
+        },
+        "GPV2.2": {
+            "name": "2.2"
+        },
+        "GPV3.1": {
+            "name": "3.1"
+        },
+        "GPV3.2": {
+            "name": "3.2"
+        },
+        "GPV4.1": {
+            "name": "4.1"
+        },
+        "GPV4.2": {
+            "name": "4.2"
+        },
+        "GPV5.1": {
+            "name": "5.1"
+        },
+        "GPV5.2": {
+            "name": "5.2"
+        },
+        "GPV6.1": {
+            "name": "6.1"
+        },
+        "GPV6.2": {
+            "name": "6.2"
+        }
+    }
+}

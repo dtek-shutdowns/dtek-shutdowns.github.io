@@ -1,0 +1,48 @@
+import { HashRouter, Routes, Route, Link } from 'react-router-dom'
+import './App.css'
+import data from './data.json'
+import GroupPage from './GroupPage'
+import { DataProvider } from './DataContext'
+
+function Home() {
+  const groupKeys = Object.keys(data.groups)
+  const rows = []
+  
+  for (let i = 0; i < groupKeys.length; i += 2) {
+    rows.push(groupKeys.slice(i, i + 2))
+  }
+  
+  return (
+    <div>
+      <h1>{data.home_title}</h1>
+      {rows.map((row, rowIndex) => (
+        <div key={rowIndex}>
+          {row.map((key) => (
+            <Link key={key} to={`/${key}`}>
+              <button>{data.group} {data.groups[key as keyof typeof data.groups].name}</button>
+            </Link>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function App() {
+  const groupKeys = Object.keys(data.groups)
+  
+  return (
+    <DataProvider>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {groupKeys.map((key) => (
+            <Route key={key} path={`/${key}`} element={<GroupPage groupKey={key} />} />
+          ))}
+        </Routes>
+      </HashRouter>
+    </DataProvider>
+  )
+}
+
+export default App
