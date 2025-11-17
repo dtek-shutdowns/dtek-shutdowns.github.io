@@ -15,7 +15,7 @@
         "no_power": "Світла немає",
         "no_power_first_half": "Світла не буде перші 30 хв.",
         "no_power_second_half": "Світла не буде другі 30 хв",
-        "current_time": "Час на момент оновлення сторінки"
+        "current_time": "Поточний час"
     },
     "groups": {
         "GPV1.1": {
