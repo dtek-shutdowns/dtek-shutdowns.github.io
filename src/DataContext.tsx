@@ -20,6 +20,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    let lastFetchTime = 0
+    const FETCH_INTERVAL = 300000 // 5 minutes
+
     async function fetchData() {
       try {
         const response = await fetch(config.fetch_url)
@@ -28,6 +31,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         }
         const data = await response.json()
         setScheduleData(data)
+        lastFetchTime = Date.now()
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error')
       } finally {
@@ -35,12 +39,29 @@ export function DataProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    fetchData()
-    const intervalId = setInterval(() => {
-      fetchData()
-    }, 300000)
+    function checkAndFetch() {
+      const timeSinceLastFetch = Date.now() - lastFetchTime
+      if (timeSinceLastFetch >= FETCH_INTERVAL) {
+        fetchData()
+      }
+    }
 
-    return () => clearInterval(intervalId)
+    fetchData()
+
+    const intervalId = setInterval(checkAndFetch, 1000)
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        checkAndFetch()
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      clearInterval(intervalId)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [])
 
   return (
