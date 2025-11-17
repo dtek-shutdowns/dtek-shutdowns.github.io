@@ -3,6 +3,7 @@ import './App.css'
 import data from './data.json'
 import GroupPage from './GroupPage'
 import { DataProvider } from './DataContext'
+import { version } from '../package.json'
 
 function Home() {
   const groupKeys = Object.keys(data.groups)
@@ -24,6 +25,7 @@ function Home() {
           ))}
         </div>
       ))}
+      <div className="app-version">{data.version} {version}</div>
     </div>
   )
 }

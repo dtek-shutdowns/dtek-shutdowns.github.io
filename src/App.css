@@ -44,3 +44,10 @@ button {
 .read-the-docs {
   color: #888;
 }
+
+.app-version {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: #666;
+  opacity: 0.7;
+}
