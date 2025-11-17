@@ -35,6 +35,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       }
     }
 
+    fetchData()
     const intervalId = setInterval(() => {
       fetchData()
     }, 300000)
