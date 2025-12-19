@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useKyivTime } from './useKyivTime'
 import data from './data.json'
 import { useScheduleData } from './DataContext'
 import './ScheduleTable.css'
@@ -17,7 +18,7 @@ function ScheduleTable({ groupKey }: ScheduleTableProps) {
     return `${start}-${end}`
   })
 
-  const now = new Date()
+  const now = useKyivTime()
   const currentHour = now.getHours()
   const currentMinute = now.getMinutes()
   const currentTimePercent = (currentMinute / 60) * 100
