@@ -131,7 +131,6 @@ function AllGroupsPage() {
         {mobileGroupRows.map((groups, rowIndex) => (
           <section className="all-groups-mobile-grid" key={rowIndex}>
             <div className="all-groups-mobile-header">
-              <span className="all-groups-mobile-time-heading" aria-hidden="true"></span>
               {groups.map(([groupKey, group]) => (
                 <span key={groupKey}>{group.name}</span>
               ))}
