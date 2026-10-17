@@ -4,12 +4,12 @@ import data from './data.json'
 import { setCookie, getCookie } from './cookieUtils'
 import { useEffect } from 'react';
 import GroupPage from './GroupPage'
+import AllGroupsPage from './AllGroupsPage'
 import { DataProvider } from './DataContext'
 import { version } from '../package.json'
 
 function Home() {
   const groupKeys = Object.keys(data.groups)
-  const rows = []
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,27 +19,28 @@ function Home() {
     }
   }, []);
 
-  for (let i = 0; i < groupKeys.length; i += 2) {
-    rows.push(groupKeys.slice(i, i + 2))
-  }
-
   const handleGroupClick = (key: string) => {
     setCookie('selectedGroup', key);
     navigate(`/${key}`);
   };
 
+  const handleAllGroupsClick = () => {
+    navigate('/all-groups');
+  };
+
   return (
     <div>
       <h1>{data.home_title}</h1>
-      {rows.map((row, rowIndex) => (
-        <div key={rowIndex}>
-          {row.map((key) => (
-            <button key={key} onClick={() => handleGroupClick(key)}>
-              {data.group} {data.groups[key as keyof typeof data.groups].name}
-            </button>
-          ))}
-        </div>
-      ))}
+      <div className="group-selection">
+        {groupKeys.map((key) => (
+          <button key={key} onClick={() => handleGroupClick(key)}>
+            {data.group} {data.groups[key as keyof typeof data.groups].name}
+          </button>
+        ))}
+        <button className="all-groups-button" onClick={handleAllGroupsClick}>
+          {data.all_groups}
+        </button>
+      </div>
       <div className="app-version">{data.version} {version}</div>
     </div>
   )
@@ -56,6 +57,7 @@ function App() {
           {groupKeys.map((key) => (
             <Route key={key} path={`/${key}`} element={<GroupPage groupKey={key} />} />
           ))}
+          <Route path="/all-groups" element={<AllGroupsPage />} />
         </Routes>
       </HashRouter>
     </DataProvider>

@@ -1,6 +1,8 @@
 {
     "fetch_url": "https://raw.githubusercontent.com/lifearoundfreaks/DTEK-parser/refs/heads/data/dtek_data.json",
     "home_title": "Оберіть вашу групу відключень",
+    "all_groups": "Усі групи разом",
+    "all_groups_schedule": "Графіки відключень для всіх груп",
     "go_back": "Повернутися до вибору групи",
     "group": "Група",
     "group_schedule": "Графік відключень для групи",
