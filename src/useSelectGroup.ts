@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getCookie, setCookie } from './cookieUtils'
+import { deleteCookie, getCookie, setCookie } from './cookieUtils'
+import data from './data.json'
 
-const legacyGroupMigration: Record<string, string> = {
+export const legacyGroupMigration: Record<string, string> = {
   'GPV1.1': 'GPV1.1',
   'GPV1.2': 'GPV2.1',
   'GPV2.1': 'GPV3.1',
@@ -27,12 +28,13 @@ export function useSelectGroup(groupKeys: string[]) {
       const migrated = legacyGroupMigration[getCookie('selectedGroup')]
       if (migrated) {
         setCookie('selectedGroup18', migrated)
+        deleteCookie('selectedGroup')
         selected = migrated
       }
     }
 
     if (selected && groupKeys.includes(selected)) {
-      navigate(`/${selected}`)
+      navigate(`/${data.groups[selected as keyof typeof data.groups].name}`)
     }
   }, [groupKeys, navigate])
 }

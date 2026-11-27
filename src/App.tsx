@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { HashRouter, Navigate, Routes, Route, useNavigate } from 'react-router-dom'
 import './App.css'
 import data from './data.json'
 import { setCookie } from './cookieUtils'
@@ -6,9 +6,13 @@ import GroupPage from './GroupPage'
 import AllGroupsPage from './AllGroupsPage'
 import { DataProvider } from './DataContext'
 import { version } from '../package.json'
-import { useSelectGroup } from './useSelectGroup'
+import { legacyGroupMigration, useSelectGroup } from './useSelectGroup'
 
 const groupKeys = Object.keys(data.groups)
+const legacyRoutes = {
+  ...Object.fromEntries(groupKeys.map((key) => [key, key])),
+  ...legacyGroupMigration,
+}
 
 function Home() {
   const navigate = useNavigate();
@@ -16,7 +20,7 @@ function Home() {
 
   const handleGroupClick = (key: string) => {
     setCookie('selectedGroup18', key);
-    navigate(`/${key}`);
+    navigate(`/${data.groups[key as keyof typeof data.groups].name}`);
   };
 
   const handleAllGroupsClick = () => {
@@ -48,7 +52,23 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {groupKeys.map((key) => (
-            <Route key={key} path={`/${key}`} element={<GroupPage groupKey={key} />} />
+            <Route
+              key={key}
+              path={`/${data.groups[key as keyof typeof data.groups].name}`}
+              element={<GroupPage groupKey={key} />}
+            />
+          ))}
+          {Object.entries(legacyRoutes).map(([oldKey, newKey]) => (
+            <Route
+              key={`legacy-${oldKey}`}
+              path={`/${oldKey}`}
+              element={
+                <Navigate
+                  replace
+                  to={`/${data.groups[newKey as keyof typeof data.groups].name}`}
+                />
+              }
+            />
           ))}
           <Route path="/all-groups" element={<AllGroupsPage />} />
         </Routes>
