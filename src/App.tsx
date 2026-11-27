@@ -1,26 +1,21 @@
 import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import './App.css'
 import data from './data.json'
-import { setCookie, getCookie } from './cookieUtils'
-import { useEffect } from 'react';
+import { setCookie } from './cookieUtils'
 import GroupPage from './GroupPage'
 import AllGroupsPage from './AllGroupsPage'
 import { DataProvider } from './DataContext'
 import { version } from '../package.json'
+import { useSelectGroup } from './useSelectGroup'
+
+const groupKeys = Object.keys(data.groups)
 
 function Home() {
-  const groupKeys = Object.keys(data.groups)
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const selected = getCookie('selectedGroup');
-    if (selected && groupKeys.includes(selected)) {
-      navigate(`/${selected}`);
-    }
-  }, []);
+  useSelectGroup(groupKeys);
 
   const handleGroupClick = (key: string) => {
-    setCookie('selectedGroup', key);
+    setCookie('selectedGroup18', key);
     navigate(`/${key}`);
   };
 
@@ -47,8 +42,6 @@ function Home() {
 }
 
 function App() {
-  const groupKeys = Object.keys(data.groups)
-  
   return (
     <DataProvider>
       <HashRouter>

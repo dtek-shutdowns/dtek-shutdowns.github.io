@@ -51,7 +51,7 @@ function AllGroupsPage() {
   }
 
   const handleGoBack = () => {
-    deleteCookie('selectedGroup')
+    deleteCookie('selectedGroup18')
     navigate('/')
   }
 
@@ -73,8 +73,8 @@ function AllGroupsPage() {
   }
 
   const groupEntries = Object.entries(data.groups)
-  const mobileGroupRows = ['.1', '.2'].map((suffix) =>
-    groupEntries.filter(([, group]) => group.name.endsWith(suffix))
+  const mobileGroupRows = Array.from({ length: 3 }, (_, rowIndex) =>
+    groupEntries.slice(rowIndex * 6, rowIndex * 6 + 6)
   )
 
   return (

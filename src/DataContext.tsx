@@ -3,7 +3,18 @@ import type { ReactNode } from 'react'
 import config from './data.json'
 
 interface ScheduleData {
-  [key: string]: any
+  data: Record<string, Record<string, Record<string, string>>>
+  today: number
+  update?: string
+}
+
+interface ScheduleFeed {
+  lastUpdated?: string
+  fact?: {
+    data?: ScheduleData['data']
+    today?: number
+    update?: string
+  }
 }
 
 interface DataContextType {
@@ -29,8 +40,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
         if (!response.ok) {
           throw new Error('Failed to fetch data')
         }
-        const data = await response.json()
-        setScheduleData(data)
+        const feed = await response.json() as ScheduleFeed
+        if (!feed.fact?.data || feed.fact.today === undefined) {
+          throw new Error('Invalid schedule data')
+        }
+        setScheduleData({
+          data: feed.fact.data,
+          today: feed.fact.today,
+          update: feed.fact.update ?? feed.lastUpdated,
+        })
         lastFetchTime = Date.now()
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error')

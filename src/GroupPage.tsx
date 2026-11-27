@@ -8,7 +8,7 @@ function GroupPage({ groupKey }: { groupKey: string }) {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    deleteCookie('selectedGroup');
+    deleteCookie('selectedGroup18');
     navigate('/');
   };
 
